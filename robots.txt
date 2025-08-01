@@ -1,0 +1,22 @@
+# Robots.txt for 픽셀창고
+# https://pxgo.kr
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /uploads/
+Disallow: /process_inquiry.php
+Disallow: /get_stats.php
+Disallow: /generate_test_data.php
+Disallow: /*.pdf$
+
+# 네이버 검색봇
+User-agent: Yeti
+Allow: /
+Crawl-delay: 1
+
+# 구글 검색봇
+User-agent: Googlebot
+Allow: /
+
+Sitemap: https://pxgo.kr/sitemap.xml
