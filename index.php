@@ -1,5 +1,4 @@
 <?php
-
 /*
  * 파일명: index.php
  * 위치: /
@@ -32,13 +31,12 @@ $formattedTransactions = number_format($totalTransactions);
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
+<meta name="naver-site-verification" content="441ff6e111c6775301efd23238972ea8d5411fcf" /><meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     
     <!-- 기본 메타 태그 -->
-    <title>픽셀창고 :: 프리미엄 PC부품 본체매입 노트북 맥북 아이패드 갤럭시탭 갤럭시북 PC방폐업 전문</title>
-    <meta name="description" content="중고컴퓨터매입, 노트북매입, 맥북매입, PC방폐업 전문. 데스크탑 본체 모니터 아이패드 최고가 매입. 전국출장 당일현금. ☎ 010-1234-5678">
-    <meta name="keywords" content="중고컴퓨터매입,노트북매입,맥북매입,PC매입,중고PC매입,중고데스크탑,PC방폐업,피시방폐업,피시방매입,PC방매입,본체매입,모니터매입,아이패드매입,중고컴퓨터본체,컴퓨터매입">
+    <title>픽셀창고 - 중고 컴퓨터 노트북 매입 전문 | PC방폐업</title>
+    <meta name="description" content="중고컴퓨터매입, 노트북매입, 맥북매입, PC방폐업 전문. 데스크탑 본체 모니터 아이패드 최고가 매입. 전국출장 당일현금. ☎ 02-381-5552">
     <meta name="author" content="픽셀창고">
     <meta name="robots" content="index,follow">
     
@@ -59,12 +57,6 @@ $formattedTransactions = number_format($totalTransactions);
     <meta name="twitter:description" content="중고컴퓨터 노트북 맥북 최고가매입. 전국출장 당일현금">
     <meta name="twitter:image" content="https://pxgo.kr/images/og-image.jpg">
     
-    <!-- 네이버 검색 최적화 -->
-    <meta name="naver-site-verification" content="네이버에서_발급받은_코드">
-    
-    <!-- 구글 검색 최적화 -->
-    <meta name="google-site-verification" content="구글에서_발급받은_코드">
-    
     <!-- Canonical URL -->
     <link rel="canonical" href="https://pxgo.kr">
     
@@ -81,11 +73,9 @@ $formattedTransactions = number_format($totalTransactions);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="preload">
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
     <!-- Styles -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -97,7 +87,7 @@ $formattedTransactions = number_format($totalTransactions);
     <header class="header">
         <div class="container">
             <div class="header-container">
-                <a href="#" class="header-logo"><img src="./images/logo.png" class="logo">픽셀창고</a>
+                <a href="#" class="header-logo"><img src="./images/logo.png" class="logo" alt="픽셀창고">픽셀창고</a>
                 <nav class="header-nav">
                     <a href="#features">서비스</a>
                     <a href="#process">프로세스</a>
@@ -113,16 +103,17 @@ $formattedTransactions = number_format($totalTransactions);
                     <div class="header-menu-icon">
                         <span></span>
                         <span></span>
+                        <span></span>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- 모바일 메뉴 -->
+<!-- 모바일 메뉴 -->
     <div class="mobile-menu">
         <div class="mobile-menu-header">
-            <a href="#" class="header-logo"><img src="./images/logo.png" class="logo">픽셀창고</a>
+            <a href="#" class="header-logo"><img src="./images/logo.png" class="logo" alt="픽셀창고">픽셀창고</a>
             <div class="mobile-menu-close">×</div>
         </div>
         <div class="mobile-menu-content">
@@ -132,7 +123,23 @@ $formattedTransactions = number_format($totalTransactions);
                 <li><a href="#quote">견적</a></li>
                 <li><a href="#contact">문의</a></li>
             </ul>
-            <a href="#quote" class="btn btn-primary btn-large" style="width: 100%;">무료 견적 받기</a>
+            
+            <div class="mobile-menu-cta">
+                <a href="#quote" class="btn btn-primary">
+                    <i class="bi bi-calculator"></i>
+                    무료 견적 받기
+                </a>
+                <a href="tel:02-381-5552" class="btn btn-secondary">
+                    <i class="bi bi-telephone-fill"></i>
+                    전화 상담하기
+                </a>
+            </div>
+            
+            <div class="mobile-menu-contact">
+                <h4>고객센터</h4>
+                <p>02-381-5552</p>
+                <span>매일 09:00 - 20:00</span>
+            </div>
         </div>
     </div>
 
@@ -163,7 +170,7 @@ $formattedTransactions = number_format($totalTransactions);
                         무료 견적 받기
                         <i class="bi bi-arrow-right"></i>
                     </a>
-                    <a href="tel:010-1234-5678" class="btn btn-secondary btn-large">
+                    <a href="tel:02-381-5552" class="btn btn-secondary btn-large">
                         <i class="bi bi-telephone-fill"></i>
                         즉시 전화 상담
                     </a>
@@ -178,14 +185,14 @@ $formattedTransactions = number_format($totalTransactions);
      -->
     <section id="features" class="features">
         <div class="container">
-            <div class="features-header fade-in">
+            <div class="features-header">
                 <h2 class="display-2">왜 픽셀창고인가?</h2>
                 <p class="body-large text-secondary">전문가의 차이를 경험하세요.</p>
             </div>
             
             <div class="features-grid">
                 <!-- 피처 섹션에서 수정할 부분 -->
-				<div class="feature-card fade-in">
+				<div class="feature-card">
 					<div class="feature-icon">🏆</div>
 					<h3 class="feature-title">검증된 신뢰</h3>
 					<p class="feature-description">
@@ -194,7 +201,7 @@ $formattedTransactions = number_format($totalTransactions);
 					</p>
 				</div>
                 
-                <div class="feature-card fade-in">
+                <div class="feature-card">
                     <div class="feature-icon">⚡</div>
                     <h3 class="feature-title">신속한 거래</h3>
                     <p class="feature-description">
@@ -203,25 +210,25 @@ $formattedTransactions = number_format($totalTransactions);
                     </p>
                 </div>
                 
-                <div class="feature-card fade-in">
+                <div class="feature-card">
                     <div class="feature-icon">🛡️</div>
                     <h3 class="feature-title">완벽한 보안</h3>
                     <p class="feature-description">
-                        군사급 데이터 삭제<br>
+                        완벽한 데이터 삭제<br>
                         개인정보 완벽 보호
                     </p>
                 </div>
                 
-                <div class="feature-card fade-in">
-                    <div class="feature-icon">🏆</div>
-                    <h3 class="feature-title">검증된 신뢰</h3>
-                    <p class="feature-description">
-                        10년 연속 고객만족 1위<br>
-                        누적 거래 50,000건
-                    </p>
-                </div>
+				<div class="feature-card">
+					<div class="feature-icon">❤️</div>
+					<h3 class="feature-title">기부 캠페인</h3>
+					<p class="feature-description">
+						매입가 1% 기부<br>
+						어린이재단 후원
+					</p>
+				</div>
                 
-                <div class="feature-card fade-in">
+                <div class="feature-card">
                     <div class="feature-icon">🌏</div>
                     <h3 class="feature-title">전국 서비스</h3>
                     <p class="feature-description">
@@ -230,7 +237,7 @@ $formattedTransactions = number_format($totalTransactions);
                     </p>
                 </div>
                 
-                <div class="feature-card fade-in">
+                <div class="feature-card">
                     <div class="feature-icon">💰</div>
                     <h3 class="feature-title">즉시 결제</h3>
                     <p class="feature-description">
@@ -239,7 +246,7 @@ $formattedTransactions = number_format($totalTransactions);
                     </p>
                 </div>
                 
-                <div class="feature-card fade-in">
+                <div class="feature-card">
                     <div class="feature-icon">🏢</div>
                     <h3 class="feature-title">기업 전문</h3>
                     <p class="feature-description">
@@ -248,7 +255,7 @@ $formattedTransactions = number_format($totalTransactions);
                     </p>
                 </div>
                 
-                <div class="feature-card fade-in">
+                <div class="feature-card">
                     <div class="feature-icon">♻️</div>
                     <h3 class="feature-title">친환경</h3>
                     <p class="feature-description">
@@ -266,13 +273,13 @@ $formattedTransactions = number_format($totalTransactions);
      -->
     <section id="process" class="process">
         <div class="container">
-            <div class="process-header fade-in">
+            <div class="process-header">
                 <h2 class="display-2">간단한 4단계</h2>
                 <p class="body-large text-secondary">복잡함은 덜고, 가치는 더하다.</p>
             </div>
             
             <div class="process-cards">
-                <div class="process-card fade-in">
+                <div class="process-card">
                     <div class="process-card-header">
                         <div class="process-number">1</div>
                         <span class="process-time">1분</span>
@@ -284,7 +291,7 @@ $formattedTransactions = number_format($totalTransactions);
                     </p>
                 </div>
                 
-                <div class="process-card fade-in">
+                <div class="process-card">
                     <div class="process-card-header">
                         <div class="process-number">2</div>
                         <span class="process-time">5분</span>
@@ -296,7 +303,7 @@ $formattedTransactions = number_format($totalTransactions);
                     </p>
                 </div>
                 
-                <div class="process-card fade-in">
+                <div class="process-card">
                     <div class="process-card-header">
                         <div class="process-number">3</div>
                         <span class="process-time">10분</span>
@@ -308,7 +315,7 @@ $formattedTransactions = number_format($totalTransactions);
                     </p>
                 </div>
                 
-                <div class="process-card fade-in">
+                <div class="process-card">
                     <div class="process-card-header">
                         <div class="process-number">4</div>
                         <span class="process-time">즉시</span>
@@ -340,9 +347,9 @@ $formattedTransactions = number_format($totalTransactions);
                         무료 견적 시작
                         <i class="bi bi-arrow-right"></i>
                     </a>
-<!--                     <a href="tel:010-1234-5678" class="btn btn-ghost btn-large">
+<!--                     <a href="tel:02-381-5552" class="btn btn-ghost btn-large">
                         <i class="bi bi-telephone"></i>
-                        010-1234-5678
+                        02-381-5552
                     </a> -->
                 </div>
             </div>
@@ -353,42 +360,7 @@ $formattedTransactions = number_format($totalTransactions);
      * 실시간 견적 현황
      * ===================================
      -->
-    <section class="inquiries">
-        <div class="container">
-            <div class="inquiries-header fade-in">
-                <div class="live-indicator">
-                    <span class="live-indicator-dot"></span>
-                    <span class="live-indicator-text">실시간 업데이트</span>
-                </div>
-                
-                <h2 class="display-3">실시간 견적 현황</h2>
-                <p class="body-large text-secondary">지금 이 순간에도 계속되는 투명한 거래</p>
-                
-                <div class="inquiries-stats">
-                    <div class="stat-item">
-                        <div class="stat-icon">📊</div>
-                        <div class="stat-value" id="todayCount">0</div>
-                        <div class="stat-label">오늘 견적</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-icon">✅</div>
-                        <div class="stat-value" id="monthCount">0</div>
-                        <div class="stat-label">이번달 거래</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-icon">⚡</div>
-                        <div class="stat-value" id="responseTime">15</div>
-                        <div class="stat-label">평균 응답(분)</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="inquiries-grid" id="inquiriesGrid">
-                <!-- 동적으로 생성됨 -->
-            </div>
-        </div>
-    </section>
-
+<?php include_once('rt.php');?>
     <!-- ===================================
      * 견적 폼 섹션
      * ===================================
@@ -396,14 +368,19 @@ $formattedTransactions = number_format($totalTransactions);
     <section id="quote" class="quote">
         <div class="container">
             <div class="quote-container">
-                <div class="quote-header fade-in">
-                    <h2 class="display-3">전문가 무료 견적</h2>
-                    <p class="body-large text-secondary">
-                        30초 안에 예상 견적을 확인하세요
-                    </p>
-                </div>
+				<div class="quote-header">
+					<h2 class="display-3">전문가 무료 견적</h2>
+					<p class="body-large text-secondary">
+						30초 안에 예상 견적을 확인하세요
+					</p>
+					<!-- 자동견적 버튼 추가 -->
+					<button class="btn-auto-quote" onclick="openAutoQuoteModal()">
+						<i class="bi bi-calculator-fill"></i>
+						PC부품 자동견적 시작
+					</button>
+				</div>
                 
-                <div class="quote-features fade-in">
+                <div class="quote-features">
                     <div class="quote-feature">
                         <i class="bi bi-check-circle-fill"></i>
                         <span>100% 무료</span>
@@ -419,7 +396,7 @@ $formattedTransactions = number_format($totalTransactions);
                 </div>
                 
 <!-- 기존 폼 섹션을 아래 코드로 완전히 교체 -->
-<form class="form fade-in" id="quoteForm" action="process_inquiry.php" method="POST" enctype="multipart/form-data">
+<form class="form" id="quoteForm" action="process_inquiry.php" method="POST" enctype="multipart/form-data">
     <div class="form-grid">
         <div class="form-group">
             <label class="form-label">이름 <span>*</span></label>
@@ -572,7 +549,7 @@ $formattedTransactions = number_format($totalTransactions);
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4><img src="./images/logo.png" class="logo">픽셀창고</h4>
+                    <h4><img src="./images/logo.png" class="logo" alt="픽셀창고">픽셀창고</h4>
                     <p class="body-small text-secondary">
                         프리미엄 디바이스 매입 전문<br>
                         10년의 신뢰와 전문성
@@ -604,7 +581,7 @@ $formattedTransactions = number_format($totalTransactions);
                 <div class="footer-section">
                     <h4>법적 정보</h4>
                     <ul>
-                        <li>상호: 픽셀창고</li>
+                        <li>상호: 팬텀디자인</li>
                         <li>대표: 강성호</li>
                         <li>사업자: 535-68-00113</li>
                     </ul>
@@ -613,7 +590,7 @@ $formattedTransactions = number_format($totalTransactions);
             
             <div class="footer-bottom">
                 <p class="footer-copyright">
-                    © 2025 픽셀창고. All rights reserved. 
+                    © 2025 팬텀디자인. All rights reserved. 
                     <a href="#">개인정보처리방침</a> · 
                     <a href="#">이용약관</a>
                 </p>
@@ -814,17 +791,96 @@ function showAdminMessage(message, type) {
      * ===================================
      -->
     <!-- 플로팅 버튼 -->
-    <div class="floating-buttons">
-        <a href="tel:010-1234-5678" class="float-btn primary">
-            <i class="bi bi-telephone-fill"></i>
-        </a>
-        <a href="#" class="float-btn kakao">
-            <i class="bi bi-chat-fill"></i>
-        </a>
-        <button class="float-btn scroll-top">
-            <i class="bi bi-arrow-up"></i>
-        </button>
-    </div>
+<!-- 1. HTML - 순서 변경 -->
+<div class="quick-actions">
+    <button class="quick-action-btn top-btn" id="quickScrollTop">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+    <a href="#quote" class="quick-action-btn quote-btn">
+        <i class="bi bi-calculator-fill"></i>
+    </a>
+    <a href="#" class="quick-action-btn kakao-btn">
+        <i class="bi bi-chat-fill"></i>
+    </a>
+</div>
+<!-- 3. JavaScript - 부드러운 전환 -->
+<script>
+// 새로운 퀵 액션 버튼 초기화
+function initQuickActions() {
+    const topBtn = document.getElementById('quickScrollTop');
+    const quoteBtn = document.querySelector('.quick-action-btn.quote-btn');
+    
+    // 디바운스 함수
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+    
+    // 스크롤 상태 체크
+    let isScrollTopVisible = false;
+    
+    function checkScrollPosition() {
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (topBtn) {
+            if (scrollPosition > 300 && !isScrollTopVisible) {
+                topBtn.classList.add('show');
+                isScrollTopVisible = true;
+            } else if (scrollPosition <= 300 && isScrollTopVisible) {
+                topBtn.classList.remove('show');
+                isScrollTopVisible = false;
+            }
+        }
+    }
+    
+    // 스크롤 이벤트 (디바운스 적용)
+    const debouncedScroll = debounce(checkScrollPosition, 10);
+    window.addEventListener('scroll', debouncedScroll);
+    
+    // 초기 상태 체크
+    checkScrollPosition();
+    
+    // 스크롤 탑 버튼 클릭
+    if (topBtn) {
+        topBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+    
+    // 무료견적 버튼 클릭
+    if (quoteBtn) {
+        quoteBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const quoteSection = document.getElementById('quote');
+            if (quoteSection) {
+                const headerHeight = document.querySelector('.header')?.offsetHeight || 80;
+                const elementPosition = quoteSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 20;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    }
+}
+
+// DOMContentLoaded에서 호출
+document.addEventListener('DOMContentLoaded', function() {
+    initQuickActions();
+});
+</script>
 
     <!-- 실시간 알림 -->
     <div class="live-notification" id="liveNotification">
@@ -838,8 +894,7 @@ function showAdminMessage(message, type) {
     </div>
 
     <!-- Scripts -->
-    <script src="script.js"></script>
-    
+	<link rel="preload" href="script.js" as="script">    
 <!-- Scripts 태그 바로 다음의 스크립트를 아래 코드로 교체 -->
 <script>
     // 한국 시군구 데이터
@@ -1084,18 +1139,449 @@ function showAdminMessage(message, type) {
 }
 </script>
 
-<!-- BreadcrumbList - 네이버 검색 노출용 -->
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [{
-        "@type": "ListItem",
-        "position": 1,
-        "name": "홈",
-        "item": "https://pxgo.kr"
-    }]
+<script>
+// 자동견적 데이터 확인 및 적용
+document.addEventListener('DOMContentLoaded', function() {
+    // 자동견적 데이터 확인
+    const autoQuoteDataStr = localStorage.getItem('autoQuoteData');
+    
+    if (autoQuoteDataStr) {
+        try {
+            const autoQuoteData = JSON.parse(autoQuoteDataStr);
+            
+            // 24시간 이내 데이터만 사용
+            const dataAge = new Date() - new Date(autoQuoteData.timestamp);
+            if (dataAge < 24 * 60 * 60 * 1000) {
+                // 자동견적 데이터 적용
+                applyAutoQuoteData(autoQuoteData);
+                
+                // 견적 섹션으로 스크롤 (알림 없이)
+                setTimeout(() => {
+                    const quoteSection = document.getElementById('quote');
+                    if (quoteSection) {
+                        const headerHeight = document.querySelector('.header').offsetHeight || 80;
+                        const elementPosition = quoteSection.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 20;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                }, 500);
+                
+                // 사용한 데이터는 삭제
+                localStorage.removeItem('autoQuoteData');
+            } else {
+                // 오래된 데이터 삭제
+                localStorage.removeItem('autoQuoteData');
+            }
+        } catch (e) {
+            console.error('자동견적 데이터 파싱 오류:', e);
+            localStorage.removeItem('autoQuoteData');
+        }
+    }
+});
+
+// 자동견적 데이터를 폼에 적용
+function applyAutoQuoteData(data) {
+    // 기존 자동견적 영역이 있으면 제거
+    const existingAutoQuote = document.querySelector('.auto-quote-display');
+    if (existingAutoQuote) {
+        existingAutoQuote.remove();
+    }
+    
+    // 기존 hidden 필드가 있으면 제거
+    const existingHiddenField = document.querySelector('input[name="auto_quote_data"]');
+    if (existingHiddenField) {
+        existingHiddenField.remove();
+    }
+    
+    // 기기 종류를 PC부품으로 설정
+    const deviceTypeSelect = document.querySelector('select[name="device_type"]');
+    if (deviceTypeSelect) {
+        deviceTypeSelect.value = 'pc_parts';
+    }
+    
+    // 브랜드/모델에 제품 정보 입력
+    const modelInput = document.querySelector('input[name="model"]');
+    if (modelInput) {
+        modelInput.value = data.brandModel;
+    }
+    
+    // 자동견적 전용 표시 영역 생성
+    createAutoQuoteDisplay(data);
+    
+    // hidden 필드에 자동견적 정보 저장
+    const hiddenAutoQuote = document.createElement('input');
+    hiddenAutoQuote.type = 'hidden';
+    hiddenAutoQuote.name = 'auto_quote_data';
+    hiddenAutoQuote.value = JSON.stringify({
+        products: data.products,
+        totalPrice: data.totalPrice
+    });
+    document.getElementById('quoteForm').appendChild(hiddenAutoQuote);
 }
+
+
+// 자동견적 전용 표시 영역 생성
+function createAutoQuoteDisplay(data) {
+    // 기존 자동견적 영역이 있으면 제거 (중복 체크)
+    const existingDisplay = document.querySelector('.auto-quote-display');
+    if (existingDisplay) {
+        existingDisplay.remove();
+    }
+    
+    // 추가 정보 textarea 위에 자동견적 정보 표시 영역 삽입
+    const messageGroup = document.querySelector('textarea[name="message"]').closest('.form-group');
+    
+    const autoQuoteDisplay = document.createElement('div');
+    autoQuoteDisplay.className = 'form-group full auto-quote-display';
+    autoQuoteDisplay.innerHTML = `
+        <label class="form-label">
+            <b><i class="bi bi-calculator"></i> 자동견적 선택 제품</b>
+            <button type="button" class="auto-quote-clear" onclick="clearAutoQuote()">
+                <i class="bi bi-x-circle"></i> 초기화
+            </button>
+        </label>
+        <div class="auto-quote-info">
+            <div class="auto-quote-header">
+                <span class="auto-quote-badge">자동견적</span>
+                <span class="auto-quote-count">${data.products.length}개 제품 선택</span>
+            </div>
+            <div class="auto-quote-products">
+                ${data.products.map(product => `
+                    <div class="auto-quote-product-item">
+                        <span class="product-category">${product.category_sub}</span>
+                        <span class="product-name">${product.product_name}</span>
+                        <span class="product-price">${numberFormat(product.final_price)}원</span>
+                    </div>
+                `).join('')}
+            </div>
+            <div class="auto-quote-total">
+                <span>예상 총 견적가</span>
+                <strong>${numberFormat(data.totalPrice)}원</strong>
+            </div>
+            <div class="auto-quote-notice">
+                <i class="bi bi-info-circle"></i>
+                실제 매입가는 제품 검수 후 최종 확정됩니다
+            </div>
+        </div>
+    `;
+    
+    // 추가 정보 필드 앞에 삽입
+    messageGroup.parentNode.insertBefore(autoQuoteDisplay, messageGroup);
+    
+    // 스타일이 없으면 추가
+    if (!document.getElementById('autoQuoteStyles')) {
+        addAutoQuoteStyles();
+    }
+}
+// 자동견적 초기화 함수
+function clearAutoQuote() {
+    // 자동견적 영역 제거
+    const autoQuoteDisplay = document.querySelector('.auto-quote-display');
+    if (autoQuoteDisplay) {
+        autoQuoteDisplay.remove();
+    }
+    
+    // hidden 필드 제거
+    const hiddenField = document.querySelector('input[name="auto_quote_data"]');
+    if (hiddenField) {
+        hiddenField.remove();
+    }
+    
+    // 기기 종류 초기화
+    const deviceTypeSelect = document.querySelector('select[name="device_type"]');
+    if (deviceTypeSelect) {
+        deviceTypeSelect.value = '';
+    }
+    
+    // 브랜드/모델 초기화
+    const modelInput = document.querySelector('input[name="model"]');
+    if (modelInput) {
+        modelInput.value = '';
+    }
+}
+
+// 스타일 추가 함수
+function addAutoQuoteStyles() {
+    const style = document.createElement('style');
+    style.id = 'autoQuoteStyles';
+    style.textContent = `
+        .auto-quote-display {
+            margin-bottom: 24px;
+        }
+        
+        .auto-quote-display .form-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .auto-quote-clear {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        
+        .auto-quote-clear:hover {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        
+        .auto-quote-info {
+            background: #f8f4ff;
+            border: 1px solid #e9d5ff;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .auto-quote-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e9d5ff;
+        }
+        
+        .auto-quote-badge {
+            background: #8b5cf6;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        .auto-quote-count {
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        .auto-quote-products {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 16px;
+        }
+        
+        .auto-quote-product-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .auto-quote-product-item .product-category {
+            color: #8b5cf6;
+            font-size: 12px;
+            font-weight: 500;
+            min-width: 80px;
+        }
+        
+        .auto-quote-product-item .product-name {
+            flex: 1;
+            margin: 0 12px;
+            color: #374151;
+        }
+        
+        .auto-quote-product-item .product-price {
+            color: #111827;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .auto-quote-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: #7c3aed;
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .auto-quote-total span {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .auto-quote-total strong {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .auto-quote-notice {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #6b7280;
+        }
+        
+        .auto-quote-notice i {
+            color: #8b5cf6;
+        }
+        
+        /* 스크롤바 스타일 */
+        .auto-quote-products::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .auto-quote-products::-webkit-scrollbar-track {
+            background: #f3f4f6;
+            border-radius: 3px;
+        }
+        
+        .auto-quote-products::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 3px;
+        }
+        
+        .auto-quote-products::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// 숫자 포맷 함수
+function numberFormat(num) {
+    return new Intl.NumberFormat('ko-KR').format(num);
+}
+</script>
+<div id="autoQuoteModal" class="auto-quote-modal">
+    <div class="auto-quote-modal-content">
+        <div class="auto-quote-modal-header">
+            <h2>PC부품 자동견적 시스템</h2>
+            <button class="modal-close" onclick="closeAutoQuoteModal()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <div class="auto-quote-modal-body">
+            <iframe id="autoQuoteFrame" src=""></iframe>
+        </div>
+    </div>
+</div>
+
+<!-- 4. JavaScript 추가 (</body> 태그 바로 위) -->
+<script>
+
+// 1. index.php에서 모달 열기 함수 수정
+function openAutoQuoteModal() {
+    const modal = document.getElementById('autoQuoteModal');
+    const iframe = document.getElementById('autoQuoteFrame');
+    
+    // iframe에 자동견적 페이지 로드 (modal=true 파라미터 추가)
+    iframe.src = '/auto_quote.php?modal=true';
+    
+    // 모달 표시
+    modal.classList.add('show');
+    
+    // body 스크롤 방지
+    document.body.style.overflow = 'hidden';
+}
+// 자동견적 모달 닫기
+function closeAutoQuoteModal() {
+    const modal = document.getElementById('autoQuoteModal');
+    const iframe = document.getElementById('autoQuoteFrame');
+    
+    // 모달 숨기기
+    modal.classList.remove('show');
+    
+    // iframe 초기화
+    setTimeout(() => {
+        iframe.src = '';
+    }, 300);
+    
+    // body 스크롤 복원
+    document.body.style.overflow = '';
+}
+
+// 모달 외부 클릭 시 닫기
+document.getElementById('autoQuoteModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeAutoQuoteModal();
+    }
+});
+
+// ESC 키로 모달 닫기
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && document.getElementById('autoQuoteModal').classList.contains('show')) {
+        closeAutoQuoteModal();
+    }
+});
+
+// 자동견적 데이터 적용 함수 (기존 함수 수정)
+window.applyAutoQuoteData = function(data) {
+    // 기기 종류를 PC부품으로 설정
+    const deviceTypeSelect = document.querySelector('select[name="device_type"]');
+    if (deviceTypeSelect) {
+        deviceTypeSelect.value = 'pc_parts';
+    }
+    
+    // 브랜드/모델에 제품 정보 입력
+    const modelInput = document.querySelector('input[name="model"]');
+    if (modelInput) {
+        modelInput.value = data.brandModel;
+    }
+    
+    // 자동견적 전용 표시 영역 생성
+    createAutoQuoteDisplay(data);
+    
+    // hidden 필드에 자동견적 정보 저장
+    const hiddenAutoQuote = document.createElement('input');
+    hiddenAutoQuote.type = 'hidden';
+    hiddenAutoQuote.name = 'auto_quote_data';
+    hiddenAutoQuote.value = JSON.stringify({
+        products: data.products,
+        totalPrice: data.totalPrice
+    });
+    document.getElementById('quoteForm').appendChild(hiddenAutoQuote);
+}
+
+// iframe과 통신을 위한 메시지 리스너
+window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'autoQuoteSubmit') {
+        // 모달 닫기
+        closeAutoQuoteModal();
+        
+        // 자동견적 데이터 적용
+        if (e.data.autoQuoteData) {
+            applyAutoQuoteData(e.data.autoQuoteData);
+            
+            // 견적 섹션으로 스크롤
+            setTimeout(() => {
+                const quoteSection = document.getElementById('quote');
+                if (quoteSection) {
+                    const headerHeight = document.querySelector('.header').offsetHeight || 80;
+                    const elementPosition = quoteSection.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 20;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }, 500);
+        }
+    }
+});
 </script>
 </body>
 </html>

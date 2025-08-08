@@ -28,42 +28,89 @@ function initMobileMenu() {
     const closeBtn = document.querySelector('.mobile-menu-close');
     const mobileMenu = document.querySelector('.mobile-menu');
     const menuLinks = document.querySelectorAll('.mobile-menu-nav a');
-    const menuIcon = document.querySelector('.header-menu-icon');
+    const ctaButtons = document.querySelectorAll('.mobile-menu-cta .btn');
     
     if (!menuBtn || !mobileMenu) return;
     
     // 메뉴 열기
     menuBtn.addEventListener('click', () => {
         mobileMenu.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        
-        // 햄버거 아이콘을 X로 변경
-        if (menuIcon) {
-            menuIcon.classList.add('active');
-        }
+        menuBtn.classList.add('active');
+        document.body.classList.add('menu-open');
     });
     
     // 메뉴 닫기
     function closeMenu() {
         mobileMenu.classList.remove('active');
-        document.body.style.overflow = '';
-        
-        // X를 햄버거 아이콘으로 복원
-        if (menuIcon) {
-            menuIcon.classList.remove('active');
-        }
+        menuBtn.classList.remove('active');
+        document.body.classList.remove('menu-open');
     }
     
-    closeBtn.addEventListener('click', closeMenu);
+    // 닫기 버튼 클릭
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeMenu);
+    }
     
     // 메뉴 링크 클릭 시 닫기
     menuLinks.forEach(link => {
-        link.addEventListener('click', closeMenu);
+        link.addEventListener('click', (e) => {
+            // 부드러운 스크롤을 위해 기본 동작 방지
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                closeMenu();
+                
+                // 메뉴가 닫힌 후 스크롤
+                setTimeout(() => {
+                    const headerHeight = 64;
+                    const targetTop = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetTop,
+                        behavior: 'smooth'
+                    });
+                }, 400);
+            }
+        });
+    });
+    
+    // CTA 버튼 클릭 시 닫기
+    ctaButtons.forEach(button => {
+        if (button.getAttribute('href').startsWith('#')) {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = button.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    closeMenu();
+                    
+                    setTimeout(() => {
+                        const headerHeight = 64;
+                        const targetTop = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                        
+                        window.scrollTo({
+                            top: targetTop,
+                            behavior: 'smooth'
+                        });
+                    }, 400);
+                }
+            });
+        }
     });
     
     // ESC 키로 닫기
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+            closeMenu();
+        }
+    });
+    
+    // 배경 클릭으로 닫기 (선택사항)
+    mobileMenu.addEventListener('click', (e) => {
+        if (e.target === mobileMenu) {
             closeMenu();
         }
     });
@@ -79,18 +126,23 @@ function initScrollEffects() {
     const navLinks = document.querySelectorAll('.header-nav a');
     const sections = document.querySelectorAll('section[id]');
     
+    // header가 없으면 함수 종료
+    if (!header) return;
+    
     let lastScroll = 0;
     
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
         
-        // 헤더 효과
-        if (currentScroll > 50) {
-            header.style.background = 'rgba(255, 255, 255, 0.95)';
-            header.style.boxShadow = '0 1px 0 rgba(0, 0, 0, 0.1)';
-        } else {
-            header.style.background = 'rgba(255, 255, 255, 1)';
-            header.style.boxShadow = '';
+        // 헤더 효과 - header가 존재하는 경우에만 실행
+        if (header) {
+            if (currentScroll > 50) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 1px 0 rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 1)';
+                header.style.boxShadow = '';
+            }
         }
         
         // Top 버튼
@@ -426,46 +478,7 @@ function animateValue(element, start, end, duration) {
     window.requestAnimationFrame(step);
 }
 
-/* 견적 그리드 업데이트 */
-function updateInquiryGrid(inquiries) {
-    const inquiriesGrid = document.getElementById('inquiriesGrid');
-    if (!inquiriesGrid) return;
-    
-    // 기존 카드 유지, 최대 12개만 표시
-    const maxCards = 12;
-    
-    // 데이터가 없으면 메시지 표시
-    if (!inquiries || inquiries.length === 0) {
-        inquiriesGrid.innerHTML = `
-            <div style="
-                grid-column: 1 / -1;
-                text-align: center;
-                padding: 60px 20px;
-                color: #6b7280;
-            ">
-                <i class="bi bi-inbox" style="font-size: 48px; display: block; margin-bottom: 16px;"></i>
-                <p style="font-size: 18px; font-weight: 500;">아직 견적 내역이 없습니다</p>
-                <p style="font-size: 14px; margin-top: 8px;">새로운 견적이 들어오면 여기에 표시됩니다</p>
-            </div>
-        `;
-        return;
-    }
-    
-    // 기존 카드 제거
-    inquiriesGrid.innerHTML = '';
-    
-    // 새로운 카드 추가 (최대 12개)
-    inquiries.slice(0, maxCards).forEach((inquiry, index) => {
-        const item = formatInquiryData(inquiry);
-        const card = createInquiryCard(item);
-        
-        // 애니메이션을 위한 지연
-        setTimeout(() => {
-            inquiriesGrid.appendChild(card);
-            setTimeout(() => card.classList.add('visible'), 50);
-        }, index * 100);
-    });
-}
+
 
 /* 견적 카드 생성 */
 function createInquiryCard(item) {
@@ -785,4 +798,94 @@ async function updateStatsFromServer() {
     } catch (error) {
         console.error('통계 업데이트 실패:', error);
     }
+}
+
+// ===================================
+// 자동견적 데이터 확인 및 적용
+// ===================================
+// checkAutoQuoteData 함수 내에 추가할 코드
+function checkAutoQuoteData() {
+    // 세션 스토리지에서 자동견적 데이터 확인
+    const autoQuoteMessage = sessionStorage.getItem('autoQuoteMessage');
+    const autoQuoteProducts = sessionStorage.getItem('autoQuoteProducts');
+    const autoQuoteFinalPrice = sessionStorage.getItem('autoQuoteFinalPrice');
+    
+    if (autoQuoteMessage && autoQuoteProducts) {
+        // 메시지 영역에 자동견적 정보 표시
+        const messageTextarea = document.querySelector('textarea[name="message"]');
+        if (messageTextarea) {
+            messageTextarea.value = autoQuoteMessage;
+        }
+        
+        // 기기 종류를 'pc_parts'로 설정 (PC부품 자동견적이므로)
+        const deviceTypeSelect = document.querySelector('select[name="device_type"]');
+        if (deviceTypeSelect) {
+            deviceTypeSelect.value = 'pc_parts';
+        }
+        
+        // 자동견적 여부를 표시하는 hidden 필드 추가
+        const form = document.getElementById('quoteForm');
+        if (form) {
+            const autoQuoteField = document.createElement('input');
+            autoQuoteField.type = 'hidden';
+            autoQuoteField.name = 'is_auto_quote';
+            autoQuoteField.value = '1';
+            form.appendChild(autoQuoteField);
+            
+            // 예상 견적가도 추가
+            const priceField = document.createElement('input');
+            priceField.type = 'hidden';
+            priceField.name = 'auto_quote_price';
+            priceField.value = autoQuoteFinalPrice;
+            form.appendChild(priceField);
+        }
+        
+        // 자동견적 알림 표시
+        showAutoQuoteNotification();
+        
+        // 세션 스토리지 클리어 (한 번만 사용)
+        sessionStorage.removeItem('autoQuoteMessage');
+        sessionStorage.removeItem('autoQuoteProducts');
+        sessionStorage.removeItem('autoQuoteFinalPrice');
+        
+        // 스크롤하여 폼으로 이동
+        setTimeout(() => {
+            const quoteSection = document.getElementById('quote');
+            if (quoteSection) {
+                quoteSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 500);
+    }
+}
+
+// ===================================
+// 자동견적 알림 표시
+// ===================================
+function showAutoQuoteNotification() {
+    const notification = document.createElement('div');
+    notification.className = 'auto-quote-notification';
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="bi bi-check-circle"></i>
+            <div>
+                <strong>자동견적 정보가 입력되었습니다</strong>
+                <p>나머지 정보를 입력하고 견적을 요청해주세요.</p>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // 애니메이션 적용
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
+    
+    // 5초 후 자동 제거
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 5000);
 }

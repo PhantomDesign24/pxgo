@@ -59,6 +59,87 @@ function sendTelegramMessage($message, $parseMode = 'HTML') {
 }
 
 /**
+ * 견적 요청 알림
+ *
+ * @param array $inquiryData 견적 데이터
+ * @return bool 성공 여부
+ */
+function sendInquiryNotification($inquiryData) {
+    // 기기 종류 텍스트
+    $deviceTypeText = [
+        'pc_parts' => 'PC부품',
+        'pc_desktop' => 'PC데스크탑',
+        'pc_set' => 'PC+모니터',
+        'monitor' => '모니터',
+        'notebook' => '노트북',
+        'macbook' => '맥북',
+        'tablet' => '태블릿',
+        'nintendo' => '닌텐도스위치',
+        'applewatch' => '애플워치'
+    ];
+    
+    // 상태 텍스트
+    $conditionText = [
+        'excellent' => '매우 좋음',
+        'good' => '좋음',
+        'fair' => '보통',
+        'poor' => '나쁨/고장'
+    ];
+    
+    // 알림 메시지 생성
+    $message = "🔔 <b>새로운 견적 요청</b>\n\n";
+    $message .= "📱 <b>고객 정보</b>\n";
+    $message .= "• 이름: {$inquiryData['name']}\n";
+    $message .= "• 연락처: {$inquiryData['phone']}\n";
+    if (!empty($inquiryData['email'])) {
+        $message .= "• 이메일: {$inquiryData['email']}\n";
+    }
+    
+    $message .= "\n💻 <b>제품 정보</b>\n";
+    $message .= "• 기기: " . ($deviceTypeText[$inquiryData['device_type']] ?? $inquiryData['device_type']) . "\n";
+    
+    if (!empty($inquiryData['brand'])) {
+        $message .= "• 브랜드: {$inquiryData['brand']}\n";
+    }
+    if (!empty($inquiryData['model'])) {
+        $message .= "• 모델: {$inquiryData['model']}\n";
+    }
+    if (!empty($inquiryData['purchase_year'])) {
+        $message .= "• 구매년도: {$inquiryData['purchase_year']}년\n";
+    }
+    
+    $message .= "• 상태: " . ($conditionText[$inquiryData['condition_status']] ?? $inquiryData['condition_status']) . "\n";
+    
+    if ($inquiryData['quantity'] > 1) {
+        $message .= "• 수량: <b>{$inquiryData['quantity']}개</b>\n";
+    }
+    
+    if ($inquiryData['is_company']) {
+        $message .= "• 구분: <b>🏢 기업고객</b>\n";
+    }
+    
+    $message .= "\n📦 <b>매입 방식</b>\n";
+    $message .= "• " . ($inquiryData['service_type'] === 'delivery' ? '무료 택배 매입' : '당일 출장 매입') . "\n";
+    if ($inquiryData['service_type'] === 'visit' && !empty($inquiryData['location'])) {
+        $message .= "• 지역: {$inquiryData['location']}\n";
+    }
+    
+    if (!empty($inquiryData['message'])) {
+        $message .= "\n💬 <b>메시지</b>\n";
+        $message .= htmlspecialchars($inquiryData['message']) . "\n";
+    }
+    
+    if (!empty($inquiryData['photos_count'])) {
+        $message .= "\n📷 사진 {$inquiryData['photos_count']}장 첨부\n";
+    }
+    
+    $message .= "\n⏰ 접수시간: " . date('Y-m-d H:i:s') . "\n";
+    $message .= "\n👉 <a href='https://pxgo.kr/admin/inquiries.php'>관리자 페이지에서 확인</a>";
+    
+    return sendTelegramMessage($message);
+}
+
+/**
  * 크론잡 시작 알림
  *
  * @param string $jobName 작업 이름

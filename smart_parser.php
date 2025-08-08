@@ -240,14 +240,16 @@ class SmartNanoParser {
                                 $productName = preg_replace('/\s+/', ' ', $productName);
                                 $productKey = $this->getProductKey($productName, $price);
                                 
-                                // 중복 체크
+								// 중복 체크
                                 if (!isset($this->collectedProducts[$productKey])) {
-                                    // 소분류에서 대분류 제거
+                                    // 소분류 처리 - ' > ' 기준으로 왼쪽 부분만 사용
                                     $cleanSubcategory = $subcategory;
                                     if (strpos($cleanSubcategory, ' > ') !== false) {
                                         $parts = explode(' > ', $cleanSubcategory);
-                                        array_shift($parts); // 첫 번째 요소(대분류) 제거
-                                        $cleanSubcategory = implode(' > ', $parts);
+                                        // 첫 번째 부분(대분류) 제거하고 두 번째 부분만 사용
+                                        if (count($parts) >= 2) {
+                                            $cleanSubcategory = $parts[1];
+                                        }
                                     }
                                     
                                     $product = [

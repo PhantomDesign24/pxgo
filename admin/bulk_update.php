@@ -1,16 +1,17 @@
 <?php
 /*
  * 파일명: bulk_update.php
- * 위치: /admin/
+ * 위치: /admin/bulk_update.php
  * 기능: 견적 일괄 처리 (상태 변경, 삭제)
  * 작성일: 2025-01-30
+ * 수정일: 2025-08-01
  */
 
 session_start();
 require_once(__DIR__ . '/../db_config.php');
 
-// 관리자 권한 체크
-if (!isset($_GET['admin']) || $_GET['admin'] !== 'true') {
+// 관리자 권한 체크 - 세션 기반으로 변경
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     http_response_code(403);
     exit(json_encode(['success' => false, 'message' => 'Unauthorized']));
 }

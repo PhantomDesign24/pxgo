@@ -4,6 +4,7 @@
  * 위치: /cron/cron_auto_parser.php
  * 기능: 자동으로 나노메모리 제품을 파싱하고 DB에 저장하는 크론잡
  * 작성일: 2025-08-01
+ * 수정일: 2025-08-02
  */
 
 // ===================================
@@ -251,9 +252,17 @@ class AutoParserCron {
             // 트랜잭션 시작
             $this->pdo->beginTransaction();
             
-            // 기존 데이터 삭제
-            $this->pdo->exec("TRUNCATE TABLE nm_products");
+            // 외래 키 체크 임시 비활성화
+            $this->pdo->exec("SET FOREIGN_KEY_CHECKS = 0");
+            $this->log("외래 키 체크 비활성화");
+            
+            // 기존 데이터 삭제 (DELETE 사용)
+            $this->pdo->exec("DELETE FROM nm_products");
             $this->log("기존 데이터 삭제 완료");
+            
+            // AUTO_INCREMENT 리셋
+            $this->pdo->exec("ALTER TABLE nm_products AUTO_INCREMENT = 1");
+            $this->log("AUTO_INCREMENT 리셋 완료");
             
             // 현재 시간
             $now = new DateTime('now', new DateTimeZone('Asia/Seoul'));
@@ -305,6 +314,10 @@ class AutoParserCron {
                 }
             }
             
+            // 외래 키 체크 재활성화
+            $this->pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
+            $this->log("외래 키 체크 재활성화");
+            
             // 트랜잭션 커밋
             $this->pdo->commit();
             
@@ -315,6 +328,14 @@ class AutoParserCron {
             if ($this->pdo->inTransaction()) {
                 $this->pdo->rollBack();
             }
+            
+            // 외래 키 체크 재활성화 (에러 발생시에도)
+            try {
+                $this->pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
+            } catch (Exception $e2) {
+                // 무시
+            }
+            
             throw $e;
         }
     }

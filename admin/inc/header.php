@@ -2,12 +2,18 @@
 /*
  * 파일명: header.php
  * 위치: /admin/inc/header.php
- * 기능: 관리자 페이지 공통 헤더
+ * 기능: 관리자 페이지 공통 헤더 - 대기중 견적 알림 추가
  * 작성일: 2025-01-31
+ * 수정일: 2025-08-01
  */
 
 // 인증 확인
 require_once(__DIR__ . '/../check_auth.php');
+
+// 대기중 견적 수 조회
+require_once(__DIR__ . '/../../db_config.php');
+$pdo = getDB();
+$pendingCount = $pdo->query("SELECT COUNT(*) FROM computer_inquiries WHERE status = 'new' AND is_test_data = 0")->fetchColumn();
 ?>
 <!DOCTYPE html>
 <html lang="ko">
@@ -26,6 +32,57 @@ require_once(__DIR__ . '/../check_auth.php');
     
     <!-- Admin CSS -->
     <link rel="stylesheet" href="/admin/css/admin.css?v=<?php echo time(); ?>">
+    
+    <!-- 추가 스타일 -->
+    <style>
+    /* 메뉴 알림 뱃지 */
+    .nav-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 20px;
+        height: 20px;
+        padding: 0 6px;
+        margin-left: auto;
+        background: #dc3545;
+        color: white;
+        font-size: 11px;
+        font-weight: 600;
+        border-radius: 10px;
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+        }
+    }
+    
+    .nav-menu a {
+        position: relative;
+        overflow: visible;
+    }
+    
+    /* 사이드바 축소 시 뱃지 위치 조정 */
+    .sidebar-collapsed .nav-badge {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        margin-left: 0;
+    }
+    
+    /* 활성 메뉴에서 뱃지 색상 */
+    .nav-menu a.active .nav-badge {
+        background: #fff;
+        color: #dc3545;
+    }
+    </style>
 </head>
 <body>
     <!-- ===================================
@@ -82,6 +139,9 @@ require_once(__DIR__ . '/../check_auth.php');
                         <a href="/admin/inquiries.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'inquiries.php' ? 'active' : ''; ?>">
                             <i class="bi bi-inbox"></i>
                             <span>견적 관리</span>
+                            <?php if ($pendingCount > 0): ?>
+                            <span class="nav-badge"><?php echo $pendingCount; ?></span>
+                            <?php endif; ?>
                         </a>
                     </li>
                     <li>

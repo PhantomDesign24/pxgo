@@ -2,8 +2,9 @@
 /*
  * 파일명: inquiries.php
  * 위치: /admin/inquiries.php
- * 기능: 견적 관리 페이지 - 깔끔한 블랙앤화이트 디자인
+ * 기능: 견적 관리 페이지 - 전체 정보 수정 가능
  * 작성일: 2025-01-31
+ * 수정일: 2025-02-01
  */
 
 $page_title = '견적 관리';
@@ -92,6 +93,20 @@ $statusList = [
     'processing' => '검수 대기',
     'completed' => '견적 완료',
     'cancelled' => '취소됨'
+];
+
+// 상태 목록
+$conditionList = [
+    'excellent' => '매우 좋음',
+    'good' => '좋음',
+    'fair' => '보통',
+    'poor' => '나쁨/고장'
+];
+
+// 매입 방식
+$serviceTypes = [
+    'delivery' => '무료 택배 매입',
+    'visit' => '당일 출장 매입'
 ];
 ?>
 
@@ -225,6 +240,9 @@ $statusList = [
                             <?php if ($inquiry['is_test_data']): ?>
                                 <span class="badge badge-secondary">TEST</span>
                             <?php endif; ?>
+                            <?php if ($inquiry['is_auto_quote']): ?>
+                                <span class="badge badge-info">자동</span>
+                            <?php endif; ?>
                         </td>
                         <td><?= htmlspecialchars($inquiry['name']) ?></td>
                         <td>
@@ -312,43 +330,154 @@ $statusList = [
 </div>
 
 <!-- ===================================
- * 수정 모달
+ * 수정 모달 (전체 정보 수정 가능)
  * ===================================
  -->
 <div class="modal" id="editModal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">견적 수정</h5>
+                <h5 class="modal-title">견적 정보 수정</h5>
                 <button type="button" class="modal-close" onclick="closeEditModal()">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="editForm">
                     <input type="hidden" id="editId" name="id">
                     
-                    <div class="form-group">
-                        <label class="form-label">상태</label>
-                        <select id="editStatus" name="status" class="form-select">
-                            <?php foreach ($statusList as $key => $value): ?>
-                                <option value="<?= $key ?>"><?= $value ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                    <div class="row">
+                        <!-- 왼쪽 열 -->
+                        <div class="col-md-6">
+                            <h6 class="section-title">고객 정보</h6>
+                            
+                            <div class="form-group">
+                                <label class="form-label">이름 <span class="required">*</span></label>
+                                <input type="text" id="editName" name="name" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">연락처 <span class="required">*</span></label>
+                                <input type="tel" id="editPhone" name="phone" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">이메일</label>
+                                <input type="email" id="editEmail" name="email" class="form-control">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <input type="checkbox" id="editIsCompany" name="is_company" value="1">
+                                    기업고객
+                                </label>
+                            </div>
+                            
+                            <h6 class="section-title mt-4">매입 정보</h6>
+                            
+                            <div class="form-group">
+                                <label class="form-label">매입 방식 <span class="required">*</span></label>
+                                <select id="editServiceType" name="service_type" class="form-select" required onchange="toggleLocationEdit()">
+                                    <?php foreach ($serviceTypes as $key => $value): ?>
+                                        <option value="<?= $key ?>"><?= $value ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group" id="editLocationGroup" style="display: none;">
+                                <label class="form-label">지역</label>
+                                <input type="text" id="editLocation" name="location" class="form-control" placeholder="예: 서울특별시 강남구">
+                            </div>
+                        </div>
+                        
+                        <!-- 오른쪽 열 -->
+                        <div class="col-md-6">
+                            <h6 class="section-title">제품 정보</h6>
+                            
+                            <div class="form-group">
+                                <label class="form-label">기기 종류 <span class="required">*</span></label>
+                                <select id="editDeviceType" name="device_type" class="form-select" required>
+                                    <?php foreach ($deviceTypes as $key => $value): ?>
+                                        <option value="<?= $key ?>"><?= $value ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">브랜드</label>
+                                <input type="text" id="editBrand" name="brand" class="form-control">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">모델명</label>
+                                <input type="text" id="editModel" name="model" class="form-control">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">구매년도</label>
+                                <select id="editPurchaseYear" name="purchase_year" class="form-select">
+                                    <option value="">선택하세요</option>
+                                    <?php for($year = date('Y'); $year >= 2015; $year--): ?>
+                                        <option value="<?= $year ?>"><?= $year ?>년</option>
+                                    <?php endfor; ?>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">제품 상태 <span class="required">*</span></label>
+                                <select id="editConditionStatus" name="condition_status" class="form-select" required>
+                                    <?php foreach ($conditionList as $key => $value): ?>
+                                        <option value="<?= $key ?>"><?= $value ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">수량</label>
+                                <input type="number" id="editQuantity" name="quantity" class="form-control" min="1" max="100" value="1">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-4">
+                    
+                    <!-- 처리 정보 -->
+                    <h6 class="section-title">처리 정보</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">처리 상태 <span class="required">*</span></label>
+                                <select id="editStatus" name="status" class="form-select" required>
+                                    <?php foreach ($statusList as $key => $value): ?>
+                                        <option value="<?= $key ?>"><?= $value ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">견적가 (만원)</label>
+                                <input type="number" id="editPrice" name="estimated_price" class="form-control" placeholder="예: 150">
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">견적가 (만원)</label>
-                        <input type="number" id="editPrice" name="estimated_price" class="form-control" placeholder="예: 150">
+                        <label class="form-label">메모/추가정보</label>
+                        <textarea id="editMessage" name="message" class="form-control" rows="4"></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">메모</label>
-                        <textarea id="editMessage" name="message" class="form-control" rows="3"></textarea>
+                        <label class="form-label">
+                            <input type="checkbox" id="editIsAutoQuote" name="is_auto_quote" value="1">
+                            자동견적 데이터
+                        </label>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="closeEditModal()">취소</button>
-                <button type="button" class="btn btn-primary" onclick="saveEdit()">저장</button>
+                <button type="button" class="btn btn-primary" onclick="saveEdit()">
+                    <i class="bi bi-check-circle"></i> 저장
+                </button>
             </div>
         </div>
     </div>
@@ -448,9 +577,47 @@ $statusList = [
     color: var(--color-white);
 }
 
-/* 모달 크기 */
+.badge-info {
+    background: #17a2b8;
+    color: var(--color-white);
+}
+
+/* 모달 크기 및 스크롤 */
 .modal-lg {
     max-width: 800px;
+}
+
+.modal {
+    overflow-y: auto;
+}
+
+.modal-dialog {
+    margin: 30px auto;
+}
+
+.modal-body {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    padding: 20px;
+}
+
+/* 스크롤바 스타일 */
+.modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: var(--color-gray-100);
+    border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: var(--color-gray-400);
+    border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gray-500);
 }
 
 /* 상세 정보 테이블 */
@@ -470,6 +637,38 @@ $statusList = [
 
 .detail-table td {
     padding: 10px;
+}
+
+/* 섹션 타이틀 */
+.section-title {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    color: var(--color-gray-700);
+}
+
+/* 필수 표시 */
+.required {
+    color: #dc3545;
+}
+
+/* 수정 폼 레이아웃 */
+.row {
+    display: flex;
+    margin: 0 -12px;
+}
+
+.col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 0 12px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--color-gray-300);
 }
 
 /* 모바일 반응형 */
@@ -494,6 +693,19 @@ $statusList = [
     .btn-group {
         flex-direction: column;
         gap: 2px;
+    }
+    
+    .col-md-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .modal-body {
+        max-height: calc(100vh - 150px);
+    }
+    
+    .modal-dialog {
+        margin: 10px;
     }
 }
 </style>
@@ -664,7 +876,11 @@ function viewInquiry(id) {
         <table class="detail-table">
             <tr>
                 <th>ID</th>
-                <td>#${inquiry.id} ${inquiry.is_test_data ? '<span class="badge badge-secondary">TEST</span>' : ''}</td>
+                <td>
+                    #${inquiry.id} 
+                    ${inquiry.is_test_data ? '<span class="badge badge-secondary">TEST</span>' : ''}
+                    ${inquiry.is_auto_quote ? '<span class="badge badge-info">자동견적</span>' : ''}
+                </td>
             </tr>
             <tr>
                 <th>상태</th>
@@ -752,12 +968,47 @@ function editInquiry(id) {
     const inquiry = inquiryData.find(item => item.id == id);
     if (!inquiry) return;
     
+    // 모든 필드 값 설정
     document.getElementById('editId').value = inquiry.id;
-    document.getElementById('editStatus').value = inquiry.status;
+    
+    // 고객 정보
+    document.getElementById('editName').value = inquiry.name || '';
+    document.getElementById('editPhone').value = inquiry.phone || '';
+    document.getElementById('editEmail').value = inquiry.email || '';
+    document.getElementById('editIsCompany').checked = inquiry.is_company == 1;
+    
+    // 매입 정보
+    document.getElementById('editServiceType').value = inquiry.service_type || 'delivery';
+    document.getElementById('editLocation').value = inquiry.location || '';
+    toggleLocationEdit(); // 지역 필드 표시 여부 결정
+    
+    // 제품 정보
+    document.getElementById('editDeviceType').value = inquiry.device_type || '';
+    document.getElementById('editBrand').value = inquiry.brand || '';
+    document.getElementById('editModel').value = inquiry.model || '';
+    document.getElementById('editPurchaseYear').value = inquiry.purchase_year || '';
+    document.getElementById('editConditionStatus').value = inquiry.condition_status || '';
+    document.getElementById('editQuantity').value = inquiry.quantity || 1;
+    
+    // 처리 정보
+    document.getElementById('editStatus').value = inquiry.status || 'new';
     document.getElementById('editPrice').value = inquiry.estimated_price || '';
     document.getElementById('editMessage').value = inquiry.message || '';
+    document.getElementById('editIsAutoQuote').checked = inquiry.is_auto_quote == 1;
     
     document.getElementById('editModal').classList.add('show');
+}
+
+// 지역 필드 토글
+function toggleLocationEdit() {
+    const serviceType = document.getElementById('editServiceType').value;
+    const locationGroup = document.getElementById('editLocationGroup');
+    
+    if (serviceType === 'visit') {
+        locationGroup.style.display = 'block';
+    } else {
+        locationGroup.style.display = 'none';
+    }
 }
 
 function closeEditModal() {
